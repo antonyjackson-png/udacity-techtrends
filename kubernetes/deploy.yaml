@@ -1,0 +1,57 @@
+## Set the API endpoint used to create the Deployment resource.
+apiVersion: apps/v1
+## Define the type of the resource.
+kind: Deployment
+## Set the parameters that make the object identifiable.
+metadata:
+  labels:
+    app: techtrends
+  name: techtrends
+  namespace: sandbox
+## Define the desired configuration for the Deployment resource.
+spec:
+  ## Set the number of replicas.
+  replicas: 1
+  ## Identify the pods managed by the Deployment.
+  selector:
+    matchLabels:
+      app: techtrends
+  ## Set the configuration for the pods.
+  template:
+    ## Define the identifiable metadata for the pods.
+    metadata:
+      labels:
+        app: techtrends
+    ## Define the desired state of the pod configuration.
+    spec:
+      containers:
+        ## Set the image to be executed inside the container.
+      - image: aj71/techtrends:v1.0.0
+        name: techtrends
+        ## Expose the port the container is listening on.
+        ports:
+        - containerPort: 3111
+          protocol: TCP
+        ## Define the rules for the liveness probes.
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 3111
+        ## Define the rules for the readiness probes.
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 3111
+        ## Set the resource Requests and Limits for an application.
+        resources:
+          ## The resource Requests guarantees that the desired amount
+          ## of CPU and memory is allocated for a pod.
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          ## The resource Limits ensures that the application is not consuming
+          ## more than the specified CPU and memory values.
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+
