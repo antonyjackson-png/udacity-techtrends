@@ -19,4 +19,4 @@ spec:
   selector:
     app: techtrends
   ## Define the Service type.
-  type: {{ .Values.service.type }]
+  type: {{ .Values.service.type }}
