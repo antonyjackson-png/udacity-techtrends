@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
         ## Set the image to be executed inside the container.
-      - image: aj71/techtrends:v1.0.0
+      - image: aj71/techtrends:latest
         name: techtrends
         ## Expose the port the container is listening on.
         ports:
