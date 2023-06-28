@@ -1,0 +1,47 @@
+## Set the API endpoint used to create the Deployment resource.
+apiVersion: apps/v1
+## Define the type of the resource.
+kind: Deployment
+## Set the parameters that make the object identifiable.
+metadata:
+  labels:
+    app: techtrends
+  name: techtrends
+  namespace: {{ .Values.namespace.name }}
+## Define the desired configuration for the Deployment resource.
+spec:
+  ## Set the number of replicas.
+  replicas: {{ .Values.replicaCount }}
+  ## Identify the pods managed by the Deployment
+  selector:
+    matchLabels:
+      app: techtrends
+  ## Set the configuration for the pods.
+  template:
+    ## Define the identifiable metadata for the pods.
+    metadata:
+      labels:
+        app: techtrends
+    ## Define the desired state of the pod configuration.
+    spec:
+      containers:
+        ## Set the image to be executed inside the container.
+      - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        name: techtrends
+        ## Expose the port the container is listening on.
+        ports:
+        - containerPort: {{ .Values.containerPort }}
+        ## Define the rules for the liveness probes.
+        livenessProbe:
+          httpGet:
+            path: {{ .Values.livenessProbe.path }}
+            port: {{ .Values.containerPort }}
+        ## Define the rules for the readiness probes.
+        readinessProbe:
+          httpGet:
+            path: {{ .Values.readinessProbe.path }}
+            port: {{ .Values.containerPort }}
+        ## Set the resource Requests and Limits for an application.
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
