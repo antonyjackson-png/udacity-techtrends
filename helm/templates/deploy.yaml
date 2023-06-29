@@ -36,12 +36,12 @@ spec:
         livenessProbe:
           httpGet:
             path: {{ .Values.livenessProbe.path }}
-            port: {{ .Values.containerPort }}
+            port: {{ .Values.livenessProbe.port }}
         ## Define the rules for the readiness probes.
         readinessProbe:
           httpGet:
             path: {{ .Values.readinessProbe.path }}
-            port: {{ .Values.containerPort }}
+            port: {{ .Values.readinessProbe.port }}
         ## Set the resource Requests and Limits for an application.
         resources:
 {{ toYaml .Values.resources | indent 12 }}
